@@ -1,0 +1,38 @@
+<div class="input-group flex-nowrap">
+  <span class="input-group-text" id="addon-wrapping">Buscar</span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Busque aqui"
+    aria-label="Username"
+    aria-describedby="addon-wrapping"
+    [(ngModel)]="buscar"
+    (ngModelChange)="filtrarFilmes()">
+</div>
+<button type="button" class="btn btn-primary" (click)="listarFilmeAleatorio()" >Aleatório</button>
+<div class="row">
+  <div class="col-3 mb-3" *ngFor="let filme of listaDeFilmes">
+    <div class="card">
+
+      <div *ngIf="filme.poster_path; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <img src="https://image.tmdb.org/t/p/w500/{{filme.poster_path}}" class="card-img-top">
+      </ng-template>
+      <ng-template #elseBlock>
+        <img src="assets/img/notfound.png" class="card-img-top">
+      </ng-template>
+
+
+
+      <div class="card-body">
+        <h5 class="card-title">{{filme.title}}</h5>
+        <h5 class="card-title">{{filme.release_date | date: 'shortDate'}}</h5>
+        <p class="card-text">{{filme.overview | slice:0:100}}</p>
+        <a routerLink="/filme/{{filme.id}}" class="card-link">Ver mais ... </a>
+      </div>
+      <button (click)="AddAPlaylist(filme)">Add a playlist</button>
+    </div>
+  </div>
+
+</div>
+
